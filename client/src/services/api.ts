@@ -7,7 +7,8 @@ import type {
   RiskDistributionData,
 } from '../types';
 
-const API_BASE = '/api';
+const rawApiUrl = import.meta.env.VITE_API_URL;
+export const API_BASE = rawApiUrl ? rawApiUrl.replace(/\/+$/, '') : '/api';
 
 export const api = {
   /**

@@ -1,3 +1,5 @@
+import { API_BASE } from './api';
+
 type SSEListener = (data: any) => void;
 type ConnectionStateListener = (state: 'connecting' | 'connected' | 'disconnected') => void;
 
@@ -15,7 +17,7 @@ class SSEClient {
 
     this.setState('connecting');
     try {
-      this.eventSource = new EventSource('/api/events/stream');
+      this.eventSource = new EventSource(`${API_BASE}/events/stream`);
 
       this.eventSource.onopen = () => {
         this.setState('connected');
