@@ -71,14 +71,40 @@ app.get('/api/health', (_req: Request, res: Response) => {
   });
 });
 
-// Mount Routes
+// Mount API Routes
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/auth', simpleRateLimiter, authRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/events', eventRoutes);
 
-// 404 Handler
-app.use((_req: Request, res: Response) => {
+// Static Frontend Serving (in production or when client/dist exists)
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const CLIENT_DIST_PATH = path.resolve(__dirname, '../../client/dist');
+const ALT_CLIENT_DIST_PATH = path.resolve(__dirname, '../client/dist');
+
+const activeDistPath = fs.existsSync(CLIENT_DIST_PATH) 
+  ? CLIENT_DIST_PATH 
+  : fs.existsSync(ALT_CLIENT_DIST_PATH) 
+  ? ALT_CLIENT_DIST_PATH 
+  : null;
+
+if (activeDistPath) {
+  app.use(express.static(activeDistPath));
+  app.get('*', (req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(activeDistPath, 'index.html'));
+  });
+}
+
+// 404 Handler for undefined API routes
+app.use('/api/*', (_req: Request, res: Response) => {
   res.status(404).json({
     error: 'Endpoint not found',
     message: 'The requested API route does not exist in SecureFlow.',
