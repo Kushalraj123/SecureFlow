@@ -82,14 +82,15 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
       </div>
 
       {/* Grid of telemetry sensors */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs">
         {/* Sensor 1: Device ID & Trust */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <Cpu className="w-3 h-3 text-cyan-400" /> Device Trust
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <Cpu className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Device Trust</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${getDeviceTrustColor(signals.deviceTrust)}`}>
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${getDeviceTrustColor(signals.deviceTrust)}`}>
               {signals.deviceTrust}
             </span>
           </div>
@@ -99,13 +100,14 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
         </div>
 
         {/* Sensor 2: Session Dwell Time */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <Clock className="w-3 h-3 text-cyan-400" /> Session Dwell
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <Clock className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Session Dwell</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${dwell < 1.0 ? 'text-red-400 bg-red-500/10 border-red-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
-              {dwell < 1.0 ? 'FAST' : 'NORMAL'}
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${dwell < 1.0 ? 'text-red-400 bg-red-500/10 border-red-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
+              {dwell < 1.0 ? 'FAST (<1s)' : 'NORMAL'}
             </span>
           </div>
           <div className="font-mono text-sm text-cyan-300 font-bold mt-1">
@@ -114,12 +116,13 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
         </div>
 
         {/* Sensor 3: Mouse Entropy */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <MousePointer className="w-3 h-3 text-cyan-400" /> Mouse Entropy
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <MousePointer className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Mouse Entropy</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${entropy <= 0.2 ? 'text-red-400 bg-red-500/10 border-red-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${entropy <= 0.2 ? 'text-red-400 bg-red-500/10 border-red-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
               {entropy <= 0.2 ? 'BOT' : 'HUMAN'}
             </span>
           </div>
@@ -130,35 +133,37 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
                 style={{ width: `${Math.min(100, entropy * 100)}%` }}
               />
             </div>
-            <span className="font-mono text-[11px] text-slate-200">
+            <span className="font-mono text-[11px] text-slate-200 shrink-0">
               {entropy.toFixed(2)}
             </span>
           </div>
         </div>
 
         {/* Sensor 4: Paste Detection */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <ClipboardCheck className="w-3 h-3 text-cyan-400" /> Paste Event
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <ClipboardCheck className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Paste Event</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${signals.pasteDetected ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${signals.pasteDetected ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
               {signals.pasteDetected ? 'YES (+15)' : 'NO'}
             </span>
           </div>
-          <div className="font-mono text-[11px] text-slate-300 mt-1">
+          <div className="font-mono text-[11px] text-slate-300 truncate mt-1">
             {signals.pasteDetected ? 'Direct Clipboard Injection' : 'Direct Keystroke Entry'}
           </div>
         </div>
 
         {/* Sensor 5: IP Reputation */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <Globe className="w-3 h-3 text-cyan-400" /> IP Reputation
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <Globe className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">IP Reputation</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${getIpRepColor(signals.ipReputation)}`}>
-              {signals.ipReputation}
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${getIpRepColor(signals.ipReputation)}`}>
+              {signals.ipReputation === 'BLACKLISTED' ? 'BLACKLIST' : signals.ipReputation}
             </span>
           </div>
           <div className="font-mono text-[11px] text-slate-300 truncate mt-1">
@@ -167,12 +172,13 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
         </div>
 
         {/* Sensor 6: Geographic Velocity */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <ShieldAlert className="w-3 h-3 text-cyan-400" /> Geo Velocity
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <ShieldAlert className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Geo Velocity</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${getGeoColor(signals.geographicVelocityStatus)}`}>
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${getGeoColor(signals.geographicVelocityStatus)}`}>
               {signals.geographicVelocityStatus === 'IMPOSSIBLE_TRAVEL' ? 'ANOMALY (+35)' : 'NORMAL'}
             </span>
           </div>
@@ -182,32 +188,34 @@ export const SignalTelemetryStream: React.FC<SignalTelemetryStreamProps> = ({
         </div>
 
         {/* Sensor 7: Typing Cadence */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <Keyboard className="w-3 h-3 text-cyan-400" /> Typing Dynamics
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <Keyboard className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Typing Dynamics</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${getCadenceColor(signals.typingCadence)}`}>
-              {signals.typingCadence}
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${getCadenceColor(signals.typingCadence)}`}>
+              {signals.typingCadence === 'BOT_LIKE' ? 'BOT (+15)' : signals.typingCadence === 'NORMAL' ? 'NORMAL' : 'IRREGULAR'}
             </span>
           </div>
-          <div className="font-mono text-[11px] text-slate-300 mt-1">
+          <div className="font-mono text-[11px] text-slate-300 truncate mt-1">
             {signals.typingCadence === 'BOT_LIKE' ? 'Zero Variance (Script)' : 'Natural Human Variance'}
           </div>
         </div>
 
         {/* Sensor 8: Velocity Indicator */}
-        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-medium flex items-center gap-1">
-              <Activity className="w-3 h-3 text-cyan-400" /> Tx Velocity
+        <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between gap-1 text-slate-400 mb-1 min-w-0">
+            <span className="text-[11px] font-medium flex items-center gap-1 truncate min-w-0">
+              <Activity className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span className="truncate">Tx Velocity</span>
             </span>
-            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${signals.transactionVelocity === 'BURST' ? 'text-red-400 bg-red-500/10 border-red-500/20' : signals.transactionVelocity === 'HIGH' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
-              {signals.transactionVelocity}
+            <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border shrink-0 whitespace-nowrap leading-none ${signals.transactionVelocity === 'BURST' ? 'text-red-400 bg-red-500/10 border-red-500/20' : signals.transactionVelocity === 'HIGH' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}`}>
+              {signals.transactionVelocity === 'BURST' ? 'BURST (+30)' : signals.transactionVelocity === 'HIGH' ? 'HIGH (+20)' : 'NORMAL'}
             </span>
           </div>
-          <div className="font-mono text-[11px] text-slate-300 mt-1">
-            {signals.transactionVelocity === 'BURST' ? 'Burst Testing (+30)' : signals.transactionVelocity === 'HIGH' ? 'Elevated (+20)' : 'Standard Pace (0)'}
+          <div className="font-mono text-[11px] text-slate-300 truncate mt-1">
+            {signals.transactionVelocity === 'BURST' ? 'Card-Testing Burst (+30)' : signals.transactionVelocity === 'HIGH' ? 'Elevated (+20)' : 'Standard Pace (0)'}
           </div>
         </div>
       </div>
