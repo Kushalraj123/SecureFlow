@@ -305,7 +305,16 @@ export const RiskConsolePage: React.FC = () => {
                     ))}
                   </Pie>
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#111827', borderColor: '#263449', borderRadius: '8px', fontSize: '11px' }}
+                    contentStyle={{ 
+                      backgroundColor: '#111827', 
+                      borderColor: '#263449', 
+                      borderRadius: '8px', 
+                      fontSize: '12px',
+                      color: '#F8FAFC',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.6)'
+                    }}
+                    itemStyle={{ color: '#F8FAFC', fontWeight: '600' }}
+                    labelStyle={{ color: '#00E5FF', fontWeight: 'bold' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
